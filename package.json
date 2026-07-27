@@ -1,0 +1,13 @@
+{
+  "name": "captiongenerator",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "audit": "node tools/audit-captions.mjs",
+    "dedupe": "node tools/dedupe-captions.mjs",
+    "brief": "node tools/make-creative-brief.mjs",
+    "validate": "node tools/validate-candidates.mjs",
+    "merge": "node tools/merge-candidates.mjs"
+  }
+}

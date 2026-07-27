@@ -1,0 +1,28 @@
+{
+  "captions": [
+    {
+      "platform": "instagram",
+      "caption": "What restaurant would this outfit get me kicked out of?",
+      "source_idea": "roastable scenario prompt",
+      "hook_type": "roast"
+    },
+    {
+      "platform": "tiktok",
+      "caption": "Reply with the picture this outfit deserves",
+      "source_idea": "image reply prompt",
+      "hook_type": "image"
+    },
+    {
+      "platform": "instagram",
+      "caption": "What's my vibe?",
+      "source_idea": "bad generic prompt",
+      "hook_type": "other"
+    },
+    {
+      "platform": "tiktok",
+      "caption": "Describe me with a GIF",
+      "source_idea": "wrong platform response type",
+      "hook_type": "gif"
+    }
+  ]
+}
