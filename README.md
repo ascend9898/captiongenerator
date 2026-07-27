@@ -6,10 +6,10 @@ Static caption picker plus local caption-bank refresh tools.
 
 1. Generate the next prompt:
    ```bash
-   npm run brief -- --write
+   npm run brief -- --platform=instagram --write
    ```
 
-2. Use Codex locally with `work/caption-refresh-request.md` and save the JSON answer to:
+2. Use Codex locally with `work/caption-refresh-request.instagram.md` and save the JSON answer to:
    ```text
    work/caption-candidates.json
    ```
@@ -36,6 +36,8 @@ Static caption picker plus local caption-bank refresh tools.
    ```
 
 For the Codex recurring automation setup, use `docs/local-codex-automation.md`.
+
+Use `--platform=tiktok`, `--platform=twitter`, or `--platform=other` when refreshing those banks. Each platform gets its own prompt because Instagram supports GIF prompts, TikTok uses image/picture prompts, and the other banks avoid platform-specific reply wording.
 
 ## Rules
 

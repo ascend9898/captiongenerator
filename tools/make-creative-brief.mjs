@@ -1,10 +1,16 @@
 import fs from "node:fs";
 import path from "node:path";
-import { repoRoot } from "./shared.mjs";
+import { platformFiles, repoRoot } from "./shared.mjs";
 
 const args = new Set(process.argv.slice(2));
 const seedArg = process.argv.find((arg) => arg.startsWith("--seed="));
+const platformArg = process.argv.find((arg) => arg.startsWith("--platform="));
 const seed = seedArg ? seedArg.split("=")[1] : new Date().toISOString().slice(0, 10);
+const platform = platformArg ? platformArg.split("=")[1] : "instagram";
+
+if (!platformFiles[platform]) {
+  throw new Error(`Unknown platform: ${platform}`);
+}
 
 function seededPick(list, salt) {
   let hash = 0;
@@ -41,13 +47,59 @@ const tones = [
 ];
 
 const mix = [
-  "Include some GIF prompts for Instagram and image/picture prompts for TikTok.",
   "Use several wrong-answers-only prompts and several nickname/title prompts.",
   "Lean into guessing, ranking, and comparison formats.",
   "Mix first-impression prompts with playful roast prompts.",
   "Include a few prompts where the reply can be only one word.",
   "Make most captions feel like something a real person would send to start replies."
 ];
+
+const platformConfig = {
+  instagram: {
+    name: "Instagram",
+    responseRule: "Instagram supports GIF replies, so GIF prompts are allowed and useful. It can also use normal comment prompts.",
+    forbidden: "Do not ask for image/picture replies when a GIF prompt would be more natural for Instagram.",
+    examples: [
+      "Describe me with a GIF",
+      "What celebrity would block me for wearing this?",
+      "Wrong answers only: where am I going dressed like this?",
+      "Give this outfit a villain name"
+    ]
+  },
+  tiktok: {
+    name: "TikTok",
+    responseRule: "TikTok uses image/picture reply prompts, not GIF prompts. Ask for a picture or image when using visual-reply formats.",
+    forbidden: "Never mention GIF, GIFs, or reaction GIFs for TikTok.",
+    examples: [
+      "Reply with the picture this look reminds you of",
+      "What cartoon character would beef with this outfit?",
+      "Wrong answers only: what did I just walk into?",
+      "What song title does this outfit look like?"
+    ]
+  },
+  twitter: {
+    name: "Twitter",
+    responseRule: "Twitter captions should be short text-reply prompts. Avoid GIF-specific wording in this bank.",
+    forbidden: "Do not mention GIFs.",
+    examples: [
+      "What fake headline would this photo cause?",
+      "What job would I get fired from in this outfit?",
+      "Rank this outfit as a life decision",
+      "Wrong answers only: what meeting did I just ruin?"
+    ]
+  },
+  other: {
+    name: "Other",
+    responseRule: "Other captions should be general text-reply prompts that work anywhere.",
+    forbidden: "Do not mention platform-specific GIF or image reply features.",
+    examples: [
+      "Give this photo a dramatic episode title",
+      "What fake award would this look win?",
+      "Wrong answers only: what am I about to announce?",
+      "Choose one: iconic, suspicious, or both?"
+    ]
+  }
+};
 
 const brief = `CREATIVE BRIEF FOR THIS BATCH:
 Focus on ${seededPick(angles, "angle")}.
@@ -57,12 +109,19 @@ ${seededPick(mix, "mix")}
 Seed: ${seed}`;
 
 const template = fs.readFileSync(path.join(repoRoot, "prompts", "caption-refresh-prompt.md"), "utf8");
-const output = template.replace("{{CREATIVE_BRIEF}}", brief);
+const config = platformConfig[platform];
+const output = template
+  .replaceAll("{{PLATFORM}}", platform)
+  .replaceAll("{{PLATFORM_NAME}}", config.name)
+  .replace("{{PLATFORM_RESPONSE_RULE}}", config.responseRule)
+  .replace("{{PLATFORM_FORBIDDEN_RULE}}", config.forbidden)
+  .replace("{{PLATFORM_EXAMPLES}}", config.examples.map((example) => `- "${example}"`).join("\n"))
+  .replace("{{CREATIVE_BRIEF}}", brief);
 
 if (args.has("--write")) {
   const workDir = path.join(repoRoot, "work");
   fs.mkdirSync(workDir, { recursive: true });
-  const outputFile = path.join(workDir, "caption-refresh-request.md");
+  const outputFile = path.join(workDir, `caption-refresh-request.${platform}.md`);
   fs.writeFileSync(outputFile, output);
   console.log(`Wrote ${outputFile}`);
 } else {
