@@ -4,12 +4,12 @@ Use this after the repo is saved as a Codex project.
 
 Name:
 ```text
-Caption Bank 5 Minute Refresh
+Caption Bank 12 Hour Refresh
 ```
 
 Schedule:
 ```text
-Every 5 minutes
+Every 12 hours
 ```
 
 Prompt:
@@ -33,7 +33,7 @@ For each platform in this order: instagram, tiktok, twitter, other:
 
 After all four platforms are merged, run `npm run trim`, `npm run remove-cringe`, `npm run prune -- --count 15`, and `npm run audit`.
 
-This means every 5-minute cycle adds 30 captions per platform and removes the oldest 15 captions per platform. Net result: each platform grows by 15 captions per cycle while stale captions rotate out.
+This means every 12-hour cycle adds 30 captions per platform and removes the oldest 15 captions per platform. Net result: each platform grows by 15 captions per cycle while stale captions rotate out.
 
 If audit shows duplicate families, boring/generic captions, or platform rule violations, fix the batch or tooling before committing.
 
