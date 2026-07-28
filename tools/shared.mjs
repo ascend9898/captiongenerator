@@ -104,10 +104,49 @@ export function hasStrongHook(caption) {
     /\bguess\b/,
     /\bcaption this\b/,
     /\bfinish the sentence\b/,
-    /\bchoose one\b/,
     /\bwho do i look like\b/,
     /\bwhat would you name\b/
   ].some((pattern) => pattern.test(text));
+}
+
+export function isCringeGeneric(caption) {
+  const text = normalizeCaption(caption);
+  const abstractLabels = [
+    "adorable",
+    "aesthetic",
+    "branding",
+    "calm",
+    "chaos",
+    "cute",
+    "danger",
+    "energy",
+    "excellent",
+    "expensive",
+    "fashionable",
+    "flex",
+    "harmless",
+    "iconic",
+    "liability",
+    "luxury",
+    "main character",
+    "paperwork",
+    "problem",
+    "rich",
+    "risk",
+    "romantic",
+    "soft",
+    "threat",
+    "vibe"
+  ];
+
+  if (/^choose one\b/.test(text)) return true;
+  if (/\bor both\b/.test(text)) return true;
+  if (/\b(main character|legal problem|excellent branding|fashionable paperwork)\b/.test(text)) return true;
+  if (/\b(cute|rich|soft|polite|romantic|financial|fashionable|calm)\s+(chaos|problem|threat|risk|liability|paperwork|danger|luxury)\b/.test(text)) return true;
+
+  const abstractHits = abstractLabels.filter((label) => text.includes(label)).length;
+  const hasConcreteFrame = /\b(celebrity|job|headline|city|country|movie|tv show|warning label|gif|picture|image|wrong answers only|where would|what does this look like|fake award|fake rumor)\b/.test(text);
+  return abstractHits >= 2 && !hasConcreteFrame;
 }
 
 export function isBoringGeneric(caption) {
@@ -146,6 +185,7 @@ export function validateCaption(platform, caption, existingByPlatform, acceptedS
   if (!value) return { ok: false, reason: "empty caption" };
   if (value.length > 140) return { ok: false, reason: "caption is too long" };
   if (isBoringGeneric(value)) return { ok: false, reason: "boring/generic prompt" };
+  if (isCringeGeneric(value)) return { ok: false, reason: "cringe/vague AI-coded prompt" };
   const platformError = platformViolation(platform, value);
   if (platformError) return { ok: false, reason: platformError };
   if (!hasStrongHook(value)) return { ok: false, reason: "missing strong interaction hook" };

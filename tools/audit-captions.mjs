@@ -1,4 +1,4 @@
-import { groupDuplicates, hasStrongHook, isBoringGeneric, platformFiles, platformViolation, readPlatform } from "./shared.mjs";
+import { groupDuplicates, hasStrongHook, isBoringGeneric, isCringeGeneric, platformFiles, platformViolation, readPlatform } from "./shared.mjs";
 
 let hasIssues = false;
 
@@ -6,17 +6,19 @@ for (const platform of Object.keys(platformFiles)) {
   const captions = readPlatform(platform).prompts;
   const duplicates = groupDuplicates(captions);
   const boring = captions.filter(isBoringGeneric);
+  const cringe = captions.filter(isCringeGeneric);
   const weak = captions.filter((caption) => !hasStrongHook(caption));
   const platformErrors = captions
     .map((caption) => ({ caption, error: platformViolation(platform, caption) }))
     .filter((item) => item.error);
 
-  if (duplicates.length || boring.length || platformErrors.length) hasIssues = true;
+  if (duplicates.length || boring.length || cringe.length || platformErrors.length) hasIssues = true;
 
   console.log(`\n${platform}`);
   console.log(`  total: ${captions.length}`);
   console.log(`  duplicate families: ${duplicates.length}`);
   console.log(`  boring/generic: ${boring.length}`);
+  console.log(`  cringe/vague AI-coded: ${cringe.length}`);
   console.log(`  weak hook candidates: ${weak.length}`);
   console.log(`  platform rule violations: ${platformErrors.length}`);
 
@@ -31,6 +33,13 @@ for (const platform of Object.keys(platformFiles)) {
     console.log("  platform violations:");
     platformErrors.slice(0, 5).forEach((item) => {
       console.log(`    - ${item.error}: ${item.caption}`);
+    });
+  }
+
+  if (cringe.length) {
+    console.log("  cringe examples:");
+    cringe.slice(0, 5).forEach((caption) => {
+      console.log(`    - ${caption}`);
     });
   }
 }

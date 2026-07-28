@@ -31,7 +31,7 @@ For each platform in this order: instagram, tiktok, twitter, other:
 5. Fix or replace rejected candidates until validation returns 30 accepted and 0 rejected.
 6. Run `npm run merge -- work/caption-candidates.<platform>.json --limit 30`.
 
-After all four platforms are merged, run `npm run trim`, `npm run prune -- --count 15`, and `npm run audit`.
+After all four platforms are merged, run `npm run trim`, `npm run remove-cringe`, `npm run prune -- --count 15`, and `npm run audit`.
 
 This means every 5-minute cycle adds 30 captions per platform and removes the oldest 15 captions per platform. Net result: each platform grows by 15 captions per cycle while stale captions rotate out.
 

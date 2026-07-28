@@ -36,6 +36,7 @@ Run the same flow once per platform.
 5. Rotate out older captions after a full four-platform cycle:
    ```bash
    npm run trim
+   npm run remove-cringe
    npm run prune -- --count 15
    ```
 
@@ -74,6 +75,7 @@ The recurring refresh should add 30 captions per platform, then prune the oldest
 - TikTok should ask for image or picture replies, not GIF replies.
 - Exact duplicates, emoji-only variants, punctuation-only variants, weak prompts, and generic captions are rejected.
 - Strong captions must push a real response: guessing, wrong answers only, roast, nickname, comparison, GIF/image reply, date/location fantasy, or "what does this look like?"
+- Vague AI-coded captions are rejected, especially abstract label-pair prompts like "cute chaos", "rich problem", "main character", "romantic risk", and "or both".
 
 ## One-Time Cleanup
 
