@@ -2,9 +2,18 @@
 
 Static caption picker plus local caption-bank refresh tools.
 
-## Daily Refresh Flow
+## Refresh Flow
 
-1. Generate the next prompt:
+Each full refresh should generate 30 captions per platform:
+
+- 30 Instagram captions
+- 30 TikTok captions
+- 30 Twitter captions
+- 30 Other captions
+
+Run the same flow once per platform.
+
+1. Generate the next platform prompt:
    ```bash
    npm run brief -- --platform=instagram --write
    ```
@@ -38,6 +47,12 @@ Static caption picker plus local caption-bank refresh tools.
 For the Codex recurring automation setup, use `docs/local-codex-automation.md`.
 
 Use `--platform=tiktok`, `--platform=twitter`, or `--platform=other` when refreshing those banks. Each platform gets its own prompt because Instagram supports GIF prompts, TikTok uses image/picture prompts, and the other banks avoid platform-specific reply wording.
+
+All writes trim caption whitespace automatically. To clean the existing bank manually:
+
+```bash
+npm run trim
+```
 
 ## Rules
 

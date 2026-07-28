@@ -6,6 +6,7 @@
   "scripts": {
     "audit": "node tools/audit-captions.mjs",
     "dedupe": "node tools/dedupe-captions.mjs",
+    "trim": "node tools/trim-captions.mjs",
     "brief": "node tools/make-creative-brief.mjs",
     "validate": "node tools/validate-candidates.mjs",
     "merge": "node tools/merge-candidates.mjs"

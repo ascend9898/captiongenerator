@@ -28,7 +28,11 @@ export function readPlatform(platform) {
 export function writePlatform(platform, data) {
   const file = platformFiles[platform];
   if (!file) throw new Error(`Unknown platform: ${platform}`);
-  fs.writeFileSync(file, `${JSON.stringify(data, null, 2)}\n`);
+  const cleaned = {
+    ...data,
+    prompts: data.prompts.map((caption) => String(caption).trim()).filter(Boolean)
+  };
+  fs.writeFileSync(file, `${JSON.stringify(cleaned, null, 2)}\n`);
 }
 
 export function readAllCaptions() {
