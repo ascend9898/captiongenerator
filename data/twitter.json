@@ -1,11 +1,26 @@
 {
   "prompts": [
-    "What fake headline would this photo cause?",
-    "What tabloid headline would this look start?",
-    "What job would I get fired from in this outfit?",
-    "Wrong answers only: what meeting did I just ruin?",
-    "What city would make this their warning sign?",
-    "What movie genre does this look belong to?",
-    "Rank this outfit as a life decision"
+    "Wrong answers only: what did I just announce?",
+    "What warning label would this photo need?",
+    "What TV show would make me the expensive problem?",
+    "What does this look like it would cancel?",
+    "What fake rumor would this outfit start by lunch?",
+    "What country would issue a statement about this?",
+    "Wrong answers only: what am I pretending to know?",
+    "What job would this outfit get promoted in?",
+    "What celebrity would claim we planned this together?",
+    "Give this photo a tabloid episode title",
+    "What city would call this a public service?",
+    "Rank this pose from casual to suspicious",
+    "What movie villain would ask where I shop?",
+    "Wrong answers only: what did I just escape?",
+    "What fake headline would your group chat write?",
+    "What warning label belongs on this confidence?",
+    "What famous person would block this for self-care?",
+    "What does this look like it would negotiate?",
+    "What job title sounds illegal but fits this?",
+    "Wrong answers only: what am I charging for this?",
+    "What fake award would my outfit campaign for?",
+    "Choose one: expensive mistake or excellent decision?"
   ]
 }
