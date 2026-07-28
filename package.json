@@ -6,6 +6,8 @@
   "scripts": {
     "audit": "node tools/audit-captions.mjs",
     "dedupe": "node tools/dedupe-captions.mjs",
+    "remove-legacy": "node tools/remove-legacy-captions.mjs",
+    "prune": "node tools/prune-captions.mjs",
     "trim": "node tools/trim-captions.mjs",
     "brief": "node tools/make-creative-brief.mjs",
     "validate": "node tools/validate-candidates.mjs",

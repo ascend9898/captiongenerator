@@ -33,12 +33,18 @@ Run the same flow once per platform.
    npm run merge -- work/caption-candidates.json --limit 30
    ```
 
-5. Audit the full bank:
+5. Rotate out older captions after a full four-platform cycle:
+   ```bash
+   npm run trim
+   npm run prune -- --count 15
+   ```
+
+6. Audit the full bank:
    ```bash
    npm run audit
    ```
 
-6. Commit:
+7. Commit:
    ```bash
    git add data prompts tools fixtures README.md package.json
    git commit -m "Refresh caption bank"
@@ -48,11 +54,19 @@ For the Codex recurring automation setup, use `docs/local-codex-automation.md`.
 
 Use `--platform=tiktok`, `--platform=twitter`, or `--platform=other` when refreshing those banks. Each platform gets its own prompt because Instagram supports GIF prompts, TikTok uses image/picture prompts, and the other banks avoid platform-specific reply wording.
 
-All writes trim caption whitespace automatically. To clean the existing bank manually:
+All writes trim caption whitespace automatically. To clean whitespace manually:
 
 ```bash
 npm run trim
 ```
+
+To remove captions that existed before this automation was added:
+
+```bash
+npm run remove-legacy
+```
+
+The recurring refresh should add 30 captions per platform, then prune the oldest 15 captions per platform. Net result: each full cycle grows each platform by 15 captions while stale material rotates out.
 
 ## Rules
 
