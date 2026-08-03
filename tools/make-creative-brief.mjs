@@ -96,7 +96,7 @@ const platformConfig = {
       "Give this photo a dramatic episode title",
       "What fake award would this look win?",
       "Wrong answers only: what am I about to announce?",
-      "Choose one: iconic, suspicious, or both?"
+      "What warning label should this photo come with?"
     ]
   }
 };
