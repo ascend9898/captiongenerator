@@ -149,6 +149,45 @@ export function isCringeGeneric(caption) {
   return abstractHits >= 2 && !hasConcreteFrame;
 }
 
+export function isConfusingNonsense(caption) {
+  const text = normalizeCaption(caption);
+
+  const confusingPhrases = [
+    "date spot",
+    "date plan",
+    "library card",
+    "salon",
+    "barista",
+    "minibar",
+    "hotel invoice",
+    "invoice title",
+    "charging to",
+    "charge to",
+    "too quiet",
+    "too casual",
+    "deny later"
+  ];
+  if (confusingPhrases.some((phrase) => text.includes(phrase))) return true;
+
+  const outfitAsPersonPatterns = [
+    /\bwhat (place|country|coffee shop|restaurant|lobby|hallway) would (this )?outfit\b/,
+    /\bwhere would (this )?outfit (make|turn|get|be|get us|treat)\b/,
+    /\bwhat .+ would (this )?outfit (make|claim|charge|lie|invent|outsource|cheat|use|overrule)\b/,
+    /\bwhat fake (alibi|job) would (this )?outfit\b/,
+    /\bwhat (board game|password) would (this )?outfit\b/
+  ];
+  if (outfitAsPersonPatterns.some((pattern) => pattern.test(text))) return true;
+
+  const badWouldFrames = [
+    /\bwhat .+ would .+ make too\b/,
+    /\bwhat .+ would .+ claim on\b/,
+    /\bwhat does this look like it would\b/,
+    /\bwhat fake headline would .+ deny\b/,
+    /\bwhat fake headline would (your|my) barista\b/
+  ];
+  return badWouldFrames.some((pattern) => pattern.test(text));
+}
+
 export function isBoringGeneric(caption) {
   const text = normalizeCaption(caption);
   const boringPatterns = [
@@ -186,6 +225,7 @@ export function validateCaption(platform, caption, existingByPlatform, acceptedS
   if (value.length > 140) return { ok: false, reason: "caption is too long" };
   if (isBoringGeneric(value)) return { ok: false, reason: "boring/generic prompt" };
   if (isCringeGeneric(value)) return { ok: false, reason: "cringe/vague AI-coded prompt" };
+  if (isConfusingNonsense(value)) return { ok: false, reason: "confusing/nonsense prompt" };
   const platformError = platformViolation(platform, value);
   if (platformError) return { ok: false, reason: platformError };
   if (!hasStrongHook(value)) return { ok: false, reason: "missing strong interaction hook" };

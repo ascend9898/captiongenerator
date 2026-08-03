@@ -16,6 +16,10 @@ Return JSON only. Do not include markdown, commentary, or explanation.
 - Do not generate plain "rate this", "thoughts?", "comment below", or "what's my vibe?" style captions.
 - Do not generate "Choose one: X, Y, or both?" captions.
 - Use concrete situations, people, places, or actions. Avoid abstract label pairs.
+- The caption must make obvious sense on first read. Do not use random nouns just to sound quirky.
+- Do not make the outfit act like a person unless the sentence is immediately understandable.
+- Avoid confusing frames involving date spots, library cards, salon charges, baristas, receipts, or an outfit "claiming" something.
+- Avoid minibar, hotel invoice, "deny later", and "what does this look like it would..." frames.
 
 ## Platform Rules
 {{PLATFORM_RESPONSE_RULE}}
@@ -34,10 +38,17 @@ Bad captions:
 - "Choose one: cute chaos, rich chaos, or both?"
 - "Choose one: romantic risk or financial risk?"
 - "Main character or legal problem?"
+- "What date spot would this outfit make too quiet?"
+- "What job would this outfit claim on a library card?"
+- "What fake headline would your barista print?"
+- "Wrong answers only: what am I charging to the salon?"
+- "What does this look like it would hide in the minibar?"
+- "What fake headline would this outfit deny later?"
+- "Give this photo a hotel invoice title"
 
 ## Caption Strategy
 Use rewrite + expand.
-- Start from these existing caption families: celebrity guesses, car/job guesses, wrong answers only, GIF/image replies, nickname/title prompts, date/location fantasy, roastable comparison prompts, "what does this look like?" prompts.
+- Start from these existing caption families: celebrity guesses, clear job guesses, wrong answers only, GIF/image replies, nickname/title prompts, roastable comparison prompts, warning-label prompts, fake headline prompts, and "what does this look like?" prompts.
 - Collapse fake variants into one canonical idea.
 - Generate fresh captions inspired by those ideas.
 - Allow new ideas only if they match the cheeky standard.

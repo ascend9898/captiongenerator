@@ -1,4 +1,4 @@
-import { groupDuplicates, hasStrongHook, isBoringGeneric, isCringeGeneric, platformFiles, platformViolation, readPlatform } from "./shared.mjs";
+import { groupDuplicates, hasStrongHook, isBoringGeneric, isConfusingNonsense, isCringeGeneric, platformFiles, platformViolation, readPlatform } from "./shared.mjs";
 
 let hasIssues = false;
 
@@ -7,18 +7,20 @@ for (const platform of Object.keys(platformFiles)) {
   const duplicates = groupDuplicates(captions);
   const boring = captions.filter(isBoringGeneric);
   const cringe = captions.filter(isCringeGeneric);
+  const confusing = captions.filter(isConfusingNonsense);
   const weak = captions.filter((caption) => !hasStrongHook(caption));
   const platformErrors = captions
     .map((caption) => ({ caption, error: platformViolation(platform, caption) }))
     .filter((item) => item.error);
 
-  if (duplicates.length || boring.length || cringe.length || platformErrors.length) hasIssues = true;
+  if (duplicates.length || boring.length || cringe.length || confusing.length || weak.length || platformErrors.length) hasIssues = true;
 
   console.log(`\n${platform}`);
   console.log(`  total: ${captions.length}`);
   console.log(`  duplicate families: ${duplicates.length}`);
   console.log(`  boring/generic: ${boring.length}`);
   console.log(`  cringe/vague AI-coded: ${cringe.length}`);
+  console.log(`  confusing/nonsense: ${confusing.length}`);
   console.log(`  weak hook candidates: ${weak.length}`);
   console.log(`  platform rule violations: ${platformErrors.length}`);
 
@@ -39,6 +41,20 @@ for (const platform of Object.keys(platformFiles)) {
   if (cringe.length) {
     console.log("  cringe examples:");
     cringe.slice(0, 5).forEach((caption) => {
+      console.log(`    - ${caption}`);
+    });
+  }
+
+  if (confusing.length) {
+    console.log("  confusing examples:");
+    confusing.slice(0, 5).forEach((caption) => {
+      console.log(`    - ${caption}`);
+    });
+  }
+
+  if (weak.length) {
+    console.log("  weak hook examples:");
+    weak.slice(0, 5).forEach((caption) => {
       console.log(`    - ${caption}`);
     });
   }
