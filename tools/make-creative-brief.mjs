@@ -23,7 +23,7 @@ const angles = [
   "playful guessing games and mildly roastable prompts",
   "wrong-answers-only prompts and confident first-impression questions",
   "nickname/title prompts and comparison prompts that feel easy to answer",
-  "date/location fantasy prompts without sounding serious or needy",
+  "clear warning-label and fake-headline prompts",
   "GIF/image reply prompts plus quick choice questions",
   "celebrity/job/movie-character guesses with a teasing tone"
 ];
