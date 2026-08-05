@@ -20,38 +20,38 @@ function seededPick(list, salt) {
 }
 
 const angles = [
-  "playful guessing games and mildly roastable prompts",
-  "wrong-answers-only prompts and confident first-impression questions",
-  "nickname/title prompts and comparison prompts that feel easy to answer",
-  "clear warning-label and fake-headline prompts",
-  "GIF/image reply prompts plus quick choice questions",
-  "celebrity/job/movie-character guesses with a teasing tone"
+  "celebrity and character guesses",
+  "job and car guesses",
+  "date and place questions",
+  "nickname prompts",
+  "direct visual-reply prompts",
+  "simple roast prompts"
 ];
 
 const avoids = [
-  "avoid plain vibe checks and one-word rating prompts",
-  "avoid car prompts this batch",
-  "avoid date/location questions this batch",
-  "avoid celebrity-only prompts this batch",
-  "avoid using the word vibe this batch",
-  "avoid yes/no prompts unless there is a funny comparison attached"
+  "avoid fake headline formats",
+  "avoid random props",
+  "avoid workplace or paperwork jokes",
+  "avoid trying to sound clever",
+  "avoid abstract labels",
+  "avoid complicated wording"
 ];
 
 const tones = [
-  "confident, teasing, and easy to roast",
-  "casual, slightly smug, and playful",
-  "flirty but not needy, with simple wording",
-  "bold, funny, and built for fast replies",
-  "lightly chaotic but still natural",
-  "direct, cheeky, and not over-written"
+  "casual and direct",
+  "flirty but simple",
+  "playful and easy to answer",
+  "cheeky but natural",
+  "short and comment-friendly",
+  "plain-spoken and confident"
 ];
 
 const mix = [
-  "Use several wrong-answers-only prompts and several nickname/title prompts.",
-  "Lean into guessing, ranking, and comparison formats.",
-  "Mix first-impression prompts with playful roast prompts.",
-  "Include a few prompts where the reply can be only one word.",
-  "Make most captions feel like something a real person would send to start replies."
+  "Use only the approved caption shapes.",
+  "Most captions should be answerable in one short comment.",
+  "Keep the wording close to how a normal person would ask.",
+  "Prefer simple questions over clever lines.",
+  "Make the prompts feel like they were written quickly by a real person."
 ];
 
 const platformConfig = {
@@ -59,9 +59,11 @@ const platformConfig = {
     name: "Instagram",
     responseRule: "Instagram supports GIF replies, so GIF prompts are allowed and useful. It can also use normal comment prompts.",
     forbidden: "Do not ask for image/picture replies when a GIF prompt would be more natural for Instagram.",
+    visualExample: "\"Describe me with a GIF\" or \"What GIF describes me right now?\"",
     examples: [
       "Describe me with a GIF",
-      "What celebrity would block me for wearing this?",
+      "What GIF describes me right now?",
+      "What celebrity do I look like?",
       "Wrong answers only: where am I going dressed like this?",
       "Give this outfit a villain name"
     ]
@@ -70,33 +72,36 @@ const platformConfig = {
     name: "TikTok",
     responseRule: "TikTok uses image/picture reply prompts, not GIF prompts. Ask for a picture or image when using visual-reply formats.",
     forbidden: "Never mention GIF, GIFs, or reaction GIFs for TikTok.",
+    visualExample: "\"Reply with the picture that describes me\" or \"What picture describes me right now?\"",
     examples: [
-      "Reply with the picture this look reminds you of",
-      "What cartoon character would beef with this outfit?",
-      "Wrong answers only: what did I just walk into?",
-      "What song title does this outfit look like?"
+      "Reply with the picture that describes me",
+      "What cartoon character do I look like?",
+      "Wrong answers only: where am I going dressed like this?",
+      "What song do I look like?"
     ]
   },
   twitter: {
     name: "Twitter",
     responseRule: "Twitter captions should be short text-reply prompts. Avoid GIF-specific wording in this bank.",
     forbidden: "Do not mention GIFs.",
+    visualExample: "\"Describe me in one word\" or \"What does this remind you of?\"",
     examples: [
-      "What fake headline would this photo cause?",
-      "What job would I get fired from in this outfit?",
-      "Rank this outfit as a life decision",
-      "Wrong answers only: what meeting did I just ruin?"
+      "What celebrity do I look like?",
+      "What job do I look like I have?",
+      "Wrong answers only: where am I going dressed like this?",
+      "Give this look a nickname"
     ]
   },
   other: {
     name: "Other",
     responseRule: "Other captions should be general text-reply prompts that work anywhere.",
     forbidden: "Do not mention platform-specific GIF or image reply features.",
+    visualExample: "\"Describe me in one word\" or \"What does this remind you of?\"",
     examples: [
-      "Give this photo a dramatic episode title",
-      "What fake award would this look win?",
-      "Wrong answers only: what am I about to announce?",
-      "What warning label should this photo come with?"
+      "What celebrity do I look like?",
+      "What job do I look like I have?",
+      "Where would you take me on a date?",
+      "Give this look a nickname"
     ]
   }
 };
@@ -113,6 +118,7 @@ const config = platformConfig[platform];
 const output = template
   .replaceAll("{{PLATFORM}}", platform)
   .replaceAll("{{PLATFORM_NAME}}", config.name)
+  .replace("{{PLATFORM_VISUAL_EXAMPLE}}", config.visualExample)
   .replace("{{PLATFORM_RESPONSE_RULE}}", config.responseRule)
   .replace("{{PLATFORM_FORBIDDEN_RULE}}", config.forbidden)
   .replace("{{PLATFORM_EXAMPLES}}", config.examples.map((example) => `- "${example}"`).join("\n"))

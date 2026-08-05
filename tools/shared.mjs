@@ -82,6 +82,11 @@ export function hasStrongHook(caption) {
     /\bwhich celebrity\b/,
     /\bwhich gif\b/,
     /\bwhich .+ gif\b/,
+    /\bwhat gif describes\b/,
+    /\bwhat reaction gif\b/,
+    /\bwhat gif (would|explains)\b/,
+    /\bwhat image describes\b/,
+    /\bwhat picture explains\b/,
     /\bwhat job\b/,
     /\bwhat fake job\b/,
     /\bwhat car\b/,
@@ -91,12 +96,18 @@ export function hasStrongHook(caption) {
     /\bwhat picture\b/,
     /\bwhat show\b/,
     /\bwhat song\b/,
+    /\bwhat drink\b/,
+    /\bwhat dessert\b/,
+    /\bwhat perfume\b/,
     /\bwhat era\b/,
+    /\bwhat city\b/,
+    /\bwhat country\b/,
     /\bwhat .+ would\b/,
+    /\bbe honest what\b/,
     /\bwhat does this look like\b/,
     /\bwhat warning label\b/,
     /\bwhere would\b/,
-    /\bdescribe .+ with (one |a )?(gif|picture|image)\b/,
+    /\bdescribe .+ with (one |a |an )?(gif|picture|image)\b/,
     /\breply with (a |the )?(gif|picture|image)\b/,
     /\bgive (this|me|my look).*(nickname|title|name)\b/,
     /\broast\b/,
@@ -105,7 +116,25 @@ export function hasStrongHook(caption) {
     /\bcaption this\b/,
     /\bfinish the sentence\b/,
     /\bwho do i look like\b/,
-    /\bwhat would you name\b/
+    /\bwhat cartoon character do i look like\b/,
+    /\bwhat would you name\b/,
+    /\bwhat would you say\b/,
+    /\bwhere am i going\b/,
+    /\bwhere are you taking me\b/,
+    /\bwhat should i (name|caption)\b/,
+    /\bwhat should someone comment\b/,
+    /\bwhat would you (guess|assume|ask|save)\b/,
+    /\bwhat would your\b/,
+    /\bwhat would this look be called\b/,
+    /\bwhat is my (red|green) flag\b/,
+    /\bdescribe me in one word\b/,
+    /\bdescribe this look in one word\b/,
+    /\bwhat is the first word\b/,
+    /\bwhat does this remind you of\b/,
+    /\bsay the first thing\b/,
+    /\bwould you\b/,
+    /\bname this\b/,
+    /\bone word\b/
   ].some((pattern) => pattern.test(text));
 }
 
@@ -188,6 +217,154 @@ export function isConfusingNonsense(caption) {
   return badWouldFrames.some((pattern) => pattern.test(text));
 }
 
+export function isUnnaturalEngagementBait(caption) {
+  const text = normalizeCaption(caption);
+
+  const allowedWrongAnswers = [
+    /\bwhere am i going\b/,
+    /\bwho do i look like\b/,
+    /\bwhat celebrity do i look like\b/,
+    /\bwhat job do i look like i have\b/,
+    /\bwhat car do i look like i drive\b/,
+    /\bbe honest what do i look like i do for work\b/,
+    /\bbe honest what kind of car do i look like i drive\b/,
+    /\bbe honest what celebrity do i look like\b/,
+    /\bwhat did i just say\b/,
+    /\bwhat am i thinking\b/,
+    /\bwhat should i name this look\b/,
+    /\bwhere would you take me\b/
+  ];
+  if (/\bwrong answers only\b/.test(text) && !allowedWrongAnswers.some((pattern) => pattern.test(text))) {
+    return true;
+  }
+
+  const fakePropFrames = [
+    "phone camera",
+    "camera roll",
+    "screen time",
+    "front desk",
+    "room going quiet",
+    "lobby",
+    "elevator",
+    "escalator",
+    "courtroom",
+    "court hallway",
+    "case file",
+    "lawyer",
+    "legal advice",
+    "legal problem",
+    "hr",
+    "pr statement",
+    "office printer",
+    "office kitchen",
+    "receptionist",
+    "waiter",
+    "bartender",
+    "bouncer",
+    "bank teller",
+    "dmv",
+    "school office",
+    "restaurant restroom",
+    "library entrance",
+    "mall kiosk",
+    "parking garage",
+    "witness testimony",
+    "witness statement",
+    "saved screenshot",
+    "screenshot evidence",
+    "pinned evidence",
+    "caption almost say",
+    "notes app",
+    "contacts list"
+  ];
+  if (fakePropFrames.some((phrase) => text.includes(phrase))) return true;
+
+  const unnaturalPatterns = [
+    /\bwhat gif (describes|explains) (my|the|this).*(camera|phone|room|desk|lobby|elevator|printer|dmv|bank|office|restaurant|screen time|comments)/,
+    /\bwhich gif (describes|explains) (my|the|this).*(camera|phone|room|desk|lobby|elevator|printer|dmv|bank|office|restaurant|screen time|comments)/,
+    /\bwhat (nickname|warning label|fake headline|fake rumor) would (the|my|this).*(front desk|camera|camera roll|elevator|lobby|office|restaurant|waiter|bartender|bouncer|receptionist|bank|dmv|notes app|contacts list)/,
+    /\bwhat fake headline would (my|the|this) (group chat|contacts list|lobby|camera|receipt|sketch artist)/,
+    /\bgive this (photo|selfie|outfit|look).*(courtroom|court|case file|suspect|witness|hr|incident|tabloid|documentary|presentation|project title|band name|text message|playlist)/,
+    /\bcaption this like (it is|you are).*(court|lawyer|hr|presentation|evidence|screenshot)/,
+    /\brank this from .*(legal|hr|pr statement|apology call|family meeting|emergency|witness|evidence)/,
+    /\bwhat fake (job|award) would .*(outfit|look|caption|selfie|mirror)/,
+    /\bwhat (job|job interview) would .*(outfit|look|photo|selfie)/,
+    /\bwhat tv show would use this as evidence\b/,
+    /\bwhat movie title would this selfie steal\b/
+  ];
+  return unnaturalPatterns.some((pattern) => pattern.test(text));
+}
+
+export function isHumanNaturalCaption(caption) {
+  const text = normalizeCaption(caption);
+  const naturalPatterns = [
+    /\bdescribe me with (a |an )?(gif|picture|image)\b/,
+    /\bdescribe my face with (a |an )?(gif|picture|image)\b/,
+    /\bdescribe this look with (a |an )?(gif|picture|image)\b/,
+    /\breply with the (gif|picture|image).*(reminds you|friend would send)\b/,
+    /\bwhat (gif|picture|image) (would|explains|describes)\b/,
+    /\bwhat gif describes me\b/,
+    /\bwhat picture describes me\b/,
+    /\bwhat image describes me\b/,
+    /\breply with the picture that describes me\b/,
+    /\breply with the image that describes me\b/,
+    /\bwhat celebrity do i look like\b/,
+    /\bwhat celebrity would i be\b/,
+    /\bwho do i look like\b/,
+    /\bwhat job do i look like i have\b/,
+    /\bwhat car do i look like i drive\b/,
+    /\bbe honest what do i look like i do for work\b/,
+    /\bbe honest what kind of car do i look like i drive\b/,
+    /\bbe honest what celebrity do i look like\b/,
+    /\bwhere would you take me\b/,
+    /\bwhere am i going dressed like this\b/,
+    /\bwhere am i going\b/,
+    /\bwhere are you taking me\b/,
+    /\bwhere do i look like im going\b/,
+    /\bwhat song do i look like\b/,
+    /\bwhat song should be playing here\b/,
+    /\bwhat drink do i look like i order\b/,
+    /\bwhat dessert do i look like\b/,
+    /\bwhat perfume do i look like i wear\b/,
+    /\bwhat city do i look like i belong in\b/,
+    /\bwhat country do i look like i belong in\b/,
+    /\bwhat era do i look like i belong in\b/,
+    /\bwhat color would you call this look\b/,
+    /\bwhat should i name this outfit\b/,
+    /\bwhat should i caption this\b/,
+    /\bwhat should someone comment on this\b/,
+    /\bwhat movie character do i look like\b/,
+    /\bwhat cartoon character do i look like\b/,
+    /\bgive (me|this look|this outfit) (a )?(nickname|name|title)\b/,
+    /\bwrong answers only\b/,
+    /\broast me\b/,
+    /\broast this outfit\b/,
+    /\broast this look\b/,
+    /\brank this outfit\b/,
+    /\brank this look\b/,
+    /\bcaption this\b/,
+    /\bdescribe me in one word\b/,
+    /\bdescribe this look in one word\b/,
+    /\bwhat is the first word that comes to mind\b/,
+    /\bwhat .+ reminds you of\b/,
+    /\bwhat would you reply to this\b/,
+    /\bwhat would you say to this\b/,
+    /\bwhat does this remind you of\b/,
+    /\bsay the first thing you thought\b/,
+    /\bwhat would you comment on this\b/,
+    /\bwould you (trust|let|introduce)\b/,
+    /\bwhat would you (guess|assume|ask|save)\b/,
+    /\bwhat would you dare me to do\b/,
+    /\bwhat would your\b/,
+    /\bwhat would this look be called\b/,
+    /\bwhat is my (red|green) flag\b/,
+    /\bfinish the sentence\b/,
+    /\bname this (era|look|outfit)\b/,
+    /\bone word\b/
+  ];
+  return naturalPatterns.some((pattern) => pattern.test(text));
+}
+
 export function isBoringGeneric(caption) {
   const text = normalizeCaption(caption);
   const boringPatterns = [
@@ -226,6 +403,8 @@ export function validateCaption(platform, caption, existingByPlatform, acceptedS
   if (isBoringGeneric(value)) return { ok: false, reason: "boring/generic prompt" };
   if (isCringeGeneric(value)) return { ok: false, reason: "cringe/vague AI-coded prompt" };
   if (isConfusingNonsense(value)) return { ok: false, reason: "confusing/nonsense prompt" };
+  if (isUnnaturalEngagementBait(value)) return { ok: false, reason: "unnatural engagement-bait prompt" };
+  if (!isHumanNaturalCaption(value)) return { ok: false, reason: "not human/natural enough" };
   const platformError = platformViolation(platform, value);
   if (platformError) return { ok: false, reason: platformError };
   if (!hasStrongHook(value)) return { ok: false, reason: "missing strong interaction hook" };
