@@ -2,6 +2,8 @@
 
 Static caption picker plus local caption-bank refresh tools.
 
+The picker uses a shared no-key counter per platform to rotate captions globally across browsers/devices. Each click increments the platform counter and maps it to the next caption in the current bank. If the shared counter is unavailable, the app fails closed instead of falling back to browser-local rotation.
+
 ## Refresh Flow
 
 Each full refresh should generate 30 captions per platform:

@@ -1,10 +1,14 @@
 let cache = {};
+const counterBaseUrl = "https://countapi.mileshilliard.com/api/v1/hit";
 
-function nextPrompt(platform, prompts) {
-  const key = `captiongenerator:${platform}:nextIndex`;
-  const current = Number.parseInt(localStorage.getItem(key) || "0", 10);
-  const index = Number.isFinite(current) ? current % prompts.length : 0;
-  localStorage.setItem(key, String((index + 1) % prompts.length));
+async function nextPrompt(platform, prompts) {
+  const counterKey = `ascend9898_captiongenerator_${platform}_v1`;
+  const res = await fetch(`${counterBaseUrl}/${counterKey}`, { cache: "no-store" });
+  if (!res.ok) throw new Error("Shared counter unavailable");
+  const data = await res.json();
+  const value = Number.parseInt(data.value, 10);
+  if (!Number.isFinite(value) || value < 1) throw new Error("Invalid shared counter value");
+  const index = (value - 1) % prompts.length;
   return prompts[index];
 }
 
@@ -30,11 +34,11 @@ async function generate() {
       return;
     }
 
-    output.innerText = nextPrompt(platform, prompts);
+    output.innerText = await nextPrompt(platform, prompts);
 
   } catch (err) {
     console.error(err);
-    output.innerText = "Error loading prompts.";
+    output.innerText = "Error loading prompt.";
   }
 }
 
