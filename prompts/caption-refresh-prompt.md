@@ -5,7 +5,7 @@ You are refreshing short social captions for {{PLATFORM_NAME}}.
 Return JSON only. No markdown, no commentary.
 
 ## Taste Standard
-Write captions a real person would post when they want easy replies.
+Write simple reply-trigger captions a real person would post on a selfie, outfit photo, mirror photo, or profile-style photo.
 
 The caption should feel like one of these:
 - "What celebrity do I look like?"
@@ -17,7 +17,8 @@ The caption should feel like one of these:
 - "Wrong answers only: where am I going dressed like this?"
 - "Roast me in one sentence"
 
-The best captions are short, obvious, and easy to answer in one comment.
+The best captions are short, obvious, witty, and easy to answer in one comment.
+Stay close to the original caption bank. Do not create captions around random objects, receipts, travel props, locations, or "proof" wording.
 
 ## Approved Caption Shapes
 Use these shapes. Do not invent weird new formats.
@@ -55,6 +56,8 @@ Use these shapes. Do not invent weird new formats.
 
 ## Avoid
 - Do not write fake bureaucracy captions.
+- Do not invent a scene, object, prop, place, or receipt.
+- Do not write captions like "Caption this airport snack soft proof like we are friends".
 - Do not use random props like front desk, lobby, phone camera, camera roll, HR, court, receipts, office printer, bank teller, hotel soap, or minibar.
 - Do not ask what an object would say, print, report, deny, witness, or charge.
 - Do not use abstract AI phrases like "cute chaos", "rich problem", "soft danger", "main character", or "or both".

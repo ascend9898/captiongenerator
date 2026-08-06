@@ -25,12 +25,15 @@ const angles = [
   "date and place questions",
   "nickname prompts",
   "direct visual-reply prompts",
-  "simple roast prompts"
+  "simple roast prompts",
+  "one-word description prompts",
+  "short first-impression prompts"
 ];
 
 const avoids = [
+  "avoid random props or scene details",
+  "avoid receipts, airports, hotels, snacks, and proof wording",
   "avoid fake headline formats",
-  "avoid random props",
   "avoid workplace or paperwork jokes",
   "avoid trying to sound clever",
   "avoid abstract labels",
@@ -51,7 +54,8 @@ const mix = [
   "Most captions should be answerable in one short comment.",
   "Keep the wording close to how a normal person would ask.",
   "Prefer simple questions over clever lines.",
-  "Make the prompts feel like they were written quickly by a real person."
+  "Make the prompts feel like they were written quickly by a real person.",
+  "Do not add objects, locations, or fake context to make a caption feel new."
 ];
 
 const platformConfig = {

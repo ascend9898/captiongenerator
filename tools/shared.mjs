@@ -181,6 +181,36 @@ export function isCringeGeneric(caption) {
 export function isConfusingNonsense(caption) {
   const text = normalizeCaption(caption);
 
+  const randomPropContext = [
+    "airport",
+    "boarding pass",
+    "bar coaster",
+    "cab",
+    "coffee receipt",
+    "dinner receipt",
+    "hotel",
+    "keycard",
+    "lobby",
+    "parking ticket",
+    "pool towel",
+    "receipt",
+    "room service",
+    "snack",
+    "taxi",
+    "terminal",
+    "valet"
+  ];
+  const randomProofWords = [
+    "alibi",
+    "evidence",
+    "proof",
+    "quick proof",
+    "soft proof",
+    "tiny proof"
+  ];
+  if (randomPropContext.some((word) => text.includes(word)) && randomProofWords.some((word) => text.includes(word))) return true;
+  if (/\b(caption this|what would you|what picture|what gif).*\b(airport|hotel|receipt|snack|terminal|taxi|cab|lobby)\b/.test(text)) return true;
+
   const confusingPhrases = [
     "date spot",
     "date plan",
