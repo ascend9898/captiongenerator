@@ -140,6 +140,14 @@ select:focus {
   select.addEventListener("change", updateStyle);
   updateStyle(); // run on load
 
+  function nextPrompt(platform, prompts) {
+    const key = `captiongenerator:${platform}:nextIndex`;
+    const current = Number.parseInt(localStorage.getItem(key) || "0", 10);
+    const index = Number.isFinite(current) ? current % prompts.length : 0;
+    localStorage.setItem(key, String((index + 1) % prompts.length));
+    return prompts[index];
+  }
+
   async function generate() {
     const platform = select.value;
     const output = document.getElementById("output");
@@ -153,9 +161,12 @@ select:focus {
 
       const prompts = data.prompts;
 
-      const random = prompts[Math.floor(Math.random() * prompts.length)];
+      if (!prompts || prompts.length === 0) {
+        output.innerText = "No prompts found.";
+        return;
+      }
 
-      output.innerText = random;
+      output.innerText = nextPrompt(platform, prompts);
 
     } catch (err) {
       console.error(err);

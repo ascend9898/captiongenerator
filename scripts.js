@@ -1,5 +1,13 @@
 let cache = {};
 
+function nextPrompt(platform, prompts) {
+  const key = `captiongenerator:${platform}:nextIndex`;
+  const current = Number.parseInt(localStorage.getItem(key) || "0", 10);
+  const index = Number.isFinite(current) ? current % prompts.length : 0;
+  localStorage.setItem(key, String((index + 1) % prompts.length));
+  return prompts[index];
+}
+
 async function loadPrompts(platform) {
   if (cache[platform]) return cache[platform];
 
@@ -22,9 +30,7 @@ async function generate() {
       return;
     }
 
-    const random = prompts[Math.floor(Math.random() * prompts.length)];
-
-    output.innerText = random;
+    output.innerText = nextPrompt(platform, prompts);
 
   } catch (err) {
     console.error(err);
