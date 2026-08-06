@@ -22,7 +22,12 @@ Run a full platform cycle every time. Generate:
 - 30 Twitter captions
 - 30 Other captions
 
-For each platform in this order: instagram, tiktok, twitter, other:
+At the start of the full cycle, before any platform brief, run `npm run pre-refresh`.
+   - This increments the refresh cycle state.
+   - Every third cycle it resets the working bank back to the original human anchor bank.
+   - If it resets, still complete the normal generation/merge/prune/audit flow before committing, so VAs never receive the raw human anchor bank by itself.
+
+Then for each platform in this order: instagram, tiktok, twitter, other:
 
 1. Run `npm run brief -- --platform=<platform> --write`.
 2. Read `work/caption-refresh-request.<platform>.md`.
@@ -34,6 +39,8 @@ For each platform in this order: instagram, tiktok, twitter, other:
 After all four platforms are merged, run `npm run trim`, `npm run remove-cringe`, `npm run prune -- --count 15`, and `npm run audit`.
 
 This means every 12-hour cycle adds 30 captions per platform and removes the oldest 15 captions per platform. Net result: each platform grows by 15 captions per cycle while stale captions rotate out.
+
+Every generated caption should stay about 95% similar to the original human bank shown in the brief. Respect platform features: Instagram can ask for GIF replies, TikTok can ask for picture/image replies, and Twitter/Other should stay text-only.
 
 If audit shows duplicate families, boring/generic captions, or platform rule violations, fix the batch or tooling before committing.
 

@@ -13,6 +13,13 @@ Each full refresh should generate 30 captions per platform:
 
 Run the same flow once per platform.
 
+0. Start the refresh cycle:
+   ```bash
+   npm run pre-refresh
+   ```
+
+   Every third cycle this resets the bank back to the original human anchor bank before generation. The cycle must still generate and merge a fresh batch before committing, so the published bank is never just the raw anchor set.
+
 1. Generate the next platform prompt:
    ```bash
    npm run brief -- --platform=instagram --write
@@ -47,7 +54,7 @@ Run the same flow once per platform.
 
 7. Commit:
    ```bash
-   git add data prompts tools fixtures README.md package.json
+   git add data prompts tools fixtures README.md package.json docs
    git commit -m "Refresh caption bank"
    ```
 
@@ -67,15 +74,16 @@ To remove captions that existed before this automation was added:
 npm run remove-legacy
 ```
 
-The recurring refresh should add 30 captions per platform, then prune the oldest 15 captions per platform. Net result: each full cycle grows each platform by 15 captions while stale material rotates out.
+The recurring refresh should add 30 captions per platform, then prune the oldest 15 captions per platform. Net result: each full cycle grows each platform by 15 captions while stale material rotates out. Every third cycle starts by resetting to the original human anchor bank, then adds and prunes a fresh batch in the same commit to prevent telephone-game drift.
 
 ## Rules
 
 - Instagram may ask for GIF replies.
 - TikTok should ask for image or picture replies, not GIF replies.
+- Twitter and Other should use text-reply prompts, not GIF/image-specific wording.
 - Exact duplicates, emoji-only variants, punctuation-only variants, weak prompts, and generic captions are rejected.
 - Strong captions must push a real response: guessing, wrong answers only, roast, nickname, comparison, GIF/image reply, date/location fantasy, or "what does this look like?"
-- Vague AI-coded captions are rejected, especially abstract label-pair prompts like "cute chaos", "rich problem", "main character", "romantic risk", and "or both".
+- New captions should be about 95% similar to the original human anchor bank. Use small wording variations of the original shapes, not new scene/object concepts.
 
 ## One-Time Cleanup
 

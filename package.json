@@ -10,6 +10,8 @@
     "remove-cringe": "node tools/remove-cringe-captions.mjs",
     "prune": "node tools/prune-captions.mjs",
     "trim": "node tools/trim-captions.mjs",
+    "pre-refresh": "node tools/pre-refresh-cycle.mjs",
+    "rebuild-human": "node tools/rebuild-human-caption-bank.mjs",
     "brief": "node tools/make-creative-brief.mjs",
     "validate": "node tools/validate-candidates.mjs",
     "merge": "node tools/merge-candidates.mjs"

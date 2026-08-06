@@ -7,21 +7,16 @@ Return JSON only. No markdown, no commentary.
 ## Taste Standard
 Write simple reply-trigger captions a real person would post on a selfie, outfit photo, mirror photo, or profile-style photo.
 
-The caption should feel like one of these:
-- "What celebrity do I look like?"
-- "Be honest, what kind of car do I look like I drive?"
-- "What job do I look like I have?"
-- "Describe me with a GIF"
-- "Where would you take me on a date?"
-- "Give this look a nickname"
-- "Wrong answers only: where am I going dressed like this?"
-- "Roast me in one sentence"
+Your job is not to invent a new caption style. Your job is to make captions that are about 95% similar to the original human bank below.
 
 The best captions are short, obvious, witty, and easy to answer in one comment.
-Stay close to the original caption bank. Do not create captions around random objects, receipts, travel props, locations, or "proof" wording.
+Stay close enough that a human would say, "same kind of caption, just a fresh wording."
+
+## Original Human Bank
+{{HUMAN_ANCHORS}}
 
 ## Approved Caption Shapes
-Use these shapes. Do not invent weird new formats.
+Use only these shapes. Do not invent weird new formats.
 
 1. Celebrity / character guess
    - "What celebrity do I look like?"
@@ -56,12 +51,22 @@ Use these shapes. Do not invent weird new formats.
 
 ## Avoid
 - Do not write fake bureaucracy captions.
-- Do not invent a scene, object, prop, place, or receipt.
+- Do not drift away from the original bank.
+- Do not invent a scene, object, prop, place, or receipt just to make a caption new.
 - Do not write captions like "Caption this airport snack soft proof like we are friends".
 - Do not use random props like front desk, lobby, phone camera, camera roll, HR, court, receipts, office printer, bank teller, hotel soap, or minibar.
 - Do not ask what an object would say, print, report, deny, witness, or charge.
 - Do not use abstract AI phrases like "cute chaos", "rich problem", "soft danger", "main character", or "or both".
 - Do not write "What's my vibe?", "Thoughts?", "Rate this", or "Comment below".
+
+## Similarity Rule
+Each caption should be a close cousin of one original caption above:
+- Same interaction type.
+- Same level of simplicity.
+- Same selfie/outfit/comment-prompt context.
+- Only small wording changes, such as swapping "outfit" for "look" or "what celebrity" for "which celebrity".
+
+Do not use a generated caption as the source for another generated caption. Always refer back to the Original Human Bank.
 
 ## Creative Brief
 {{CREATIVE_BRIEF}}

@@ -1,5 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
+import { anchorPromptsForPlatform } from "./human-anchor-bank.mjs";
 import { platformFiles, repoRoot } from "./shared.mjs";
 
 const args = new Set(process.argv.slice(2));
@@ -20,24 +21,19 @@ function seededPick(list, salt) {
 }
 
 const angles = [
-  "celebrity and character guesses",
-  "job and car guesses",
-  "date and place questions",
-  "nickname prompts",
-  "direct visual-reply prompts",
-  "simple roast prompts",
-  "one-word description prompts",
-  "short first-impression prompts"
+  "celebrity, character, job, and car guesses",
+  "date/place questions and nickname prompts",
+  "simple roast, one-word, and first-impression prompts",
+  "platform-specific visual reply prompts"
 ];
 
 const avoids = [
-  "avoid random props or scene details",
-  "avoid receipts, airports, hotels, snacks, and proof wording",
-  "avoid fake headline formats",
-  "avoid workplace or paperwork jokes",
-  "avoid trying to sound clever",
-  "avoid abstract labels",
-  "avoid complicated wording"
+  "do not add random props or scene details",
+  "do not add receipts, airports, hotels, snacks, or proof wording",
+  "do not add fake headline formats",
+  "do not try to sound clever",
+  "do not use abstract labels",
+  "do not complicate the wording"
 ];
 
 const tones = [
@@ -50,12 +46,10 @@ const tones = [
 ];
 
 const mix = [
-  "Use only the approved caption shapes.",
-  "Most captions should be answerable in one short comment.",
-  "Keep the wording close to how a normal person would ask.",
-  "Prefer simple questions over clever lines.",
-  "Make the prompts feel like they were written quickly by a real person.",
-  "Do not add objects, locations, or fake context to make a caption feel new."
+  "Make every caption a close cousin of one original anchor.",
+  "Keep the same interaction type as the anchor you are riffing on.",
+  "Prefer tiny wording changes over new concepts.",
+  "If a caption feels more than 5% different from the anchors, reject it."
 ];
 
 const platformConfig = {
@@ -122,6 +116,7 @@ const config = platformConfig[platform];
 const output = template
   .replaceAll("{{PLATFORM}}", platform)
   .replaceAll("{{PLATFORM_NAME}}", config.name)
+  .replace("{{HUMAN_ANCHORS}}", anchorPromptsForPlatform(platform).map((caption) => `- "${caption}"`).join("\n"))
   .replace("{{PLATFORM_VISUAL_EXAMPLE}}", config.visualExample)
   .replace("{{PLATFORM_RESPONSE_RULE}}", config.responseRule)
   .replace("{{PLATFORM_FORBIDDEN_RULE}}", config.forbidden)
